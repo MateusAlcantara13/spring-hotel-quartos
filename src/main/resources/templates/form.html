@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário</title>
+</head>
+<body>
+
+<form th:action="@{/quartos}" th:object="${postForm}" method="post">
+
+    <label>Número</label>
+    <input type="text" th:field="*{numero}">
+    <span th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}" style="color: red"></span>
+    <br><br>
+
+    <label>Andar</label>
+    <input type="text" th:field="*{andar}">
+    <span th:if="${#fields.hasErrors('andar')}" th:errors="*{andar}" style="color: red"></span>
+    <br><br>
+
+    <label>Tipo de quarto</label>
+    <select th:field="*{tipoQuarto}">
+        <option value="">--SELECIONAR--</option>
+        <option th:each="item : ${categorias}" th:value="${item}" th:text="${item}"></option>
+    </select>
+    <span th:if="${#fields.hasErrors('tipoQuarto')}" th:errors="${tipoQuarto}" style="color: red"></span>
+    <br><br>
+
+    <label>Valor da diária</label>
+    <input type="number" step="0.01" th:field="*{valorDiaria}">
+    <span th:if="${#fields.hasErrors('valorDiaria')}" th:errors="*{valorDiaria}" style="color: red"></span>
+    <br><br>
+
+    <button type="submit">Enviar</button>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes</title>
+</head>
+<body>
+
+<h1>Detalhes do quarto #<span th:text="${detalhes.id}"></span></h1>
+
+<br><br>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Número</th>
+        <th>Andar</th>
+        <th>Tipo de quarto</th>
+        <th>Status do quarto</th>
+        <th>Valor da diária</th>
+        <th>Alterar status</th>
+    </tr>
+    <tr>
+        <td th:text="${detalhes.id}"></td>
+        <td th:text="${detalhes.numero}"></td>
+        <td th:text="${detalhes.andar}"></td>
+        <td th:text="${detalhes.tipoQuarto}"></td>
+        <td th:text="${detalhes.statusQuarto}"></td>
+        <td th:text="${detalhes.valorDiaria}"></td>
+        <td>
+            <form th:if="${detalhes.statusQuarto.name() == 'LIVRE'}" th:action="@{/quartos/{id}/ocupar(id=${detalhes.id})}" method="post" style="display: inline">
+                <button type="submit">Ocupar</button>
+            </form>
+            <form th:if="${detalhes.statusQuarto.name() == 'OCUPADO'}" th:action="@{/quartos/{id}/liberar(id=${detalhes.id})}" method="post" style="display: inline">
+                <button type="submit">Liberar</button>
+            </form>
+            <form th:if="${detalhes.statusQuarto.name() == 'LIVRE'}" th:action="@{/quartos/{id}/enviarManutencao(id=${detalhes.id})}" method="post" style="display: inline">
+                <button type="submit">Enviar para manutenção</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<br><br>
+
+<a th:href="@{/quartos}">Voltar para lista principal</a>
+<br>
+<a th:href="@{/quartos/novo}">Adicionar novo</a>
+
+</body>
+</html>
