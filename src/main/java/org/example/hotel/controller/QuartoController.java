@@ -1,9 +1,11 @@
 package org.example.hotel.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.example.hotel.model.Quarto;
 import org.example.hotel.model.TipoQuarto;
 import org.example.hotel.repository.QuartoRepository;
+import org.example.hotel.service.QuartoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,18 +13,16 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/quartos")
+@RequiredArgsConstructor
 public class QuartoController {
 
-    private final QuartoRepository repository;
+    private final QuartoService service;
 
-    public QuartoController(QuartoRepository repository){
-        this.repository = repository;
-    }
 
     // 1 - Listar tudo
     @GetMapping
     public String listar(Model model) {
-        model.addAttribute("quartos", repository.getTodos());
+        model.addAttribute("quartos", service.listarTodos());
         return "quartos";
     }
 
@@ -41,43 +41,43 @@ public class QuartoController {
             model.addAttribute("categorias", TipoQuarto.values());
             return "form";
         }
-        repository.adicionar(quarto);
+        service.salvar(quarto);
         return "redirect:/quartos";
     }
 
     // buscar por id
     @GetMapping("/{id}")
     public String buscarId(@PathVariable Long id, Model model) {
-        model.addAttribute("detalhes", repository.buscarPorId(id));
+        model.addAttribute("detalhes", service.buscarPorId(id));
         return "detalhes";
     }
 
     // ocupar
     @PostMapping("/{id}/ocupar")
     public String ocupar(@PathVariable Long id){
-        repository.buscarPorId(id).ocupar();
+        service.ocupar(id);
         return "redirect:/quartos";
     }
 
     // liberar
     @PostMapping("/{id}/liberar")
     public String liberar(@PathVariable Long id){
-        repository.buscarPorId(id).liberar();
+        service.liberar(id);
         return "redirect:/quartos";
     }
 
     // enviar para manuntenção
     @PostMapping("/{id}/enviarManutencao")
     public String enviarManutencao(@PathVariable Long id) {
-        repository.buscarPorId(id).enviarManutencao();
+        service.enviarManutencao(id);
         return "redirect:/quartos";
     }
 
     // retorna lista de quartos livres e o seu respectivo número
     @GetMapping("/livres")
     public String diponiveis(Model model){
-        model.addAttribute("disponiveis", repository.listarlivres());
-        model.addAttribute("numeroDisponíveis", repository.contarLivres());
+        model.addAttribute("disponiveis", service.ListarLivres());
+        model.addAttribute("numeroDisponíveis", service.contarLivres());
         return "livres";
     }
 

@@ -23,7 +23,7 @@
         <option value="">--SELECIONAR--</option>
         <option th:each="item : ${categorias}" th:value="${item}" th:text="${item}"></option>
     </select>
-    <span th:if="${#fields.hasErrors('tipoQuarto')}" th:errors="${tipoQuarto}" style="color: red"></span>
+    <span th:if="${#fields.hasErrors('tipoQuarto')}" th:errors="*{tipoQuarto}" style="color: red"></span>
     <br><br>
 
     <label>Valor da diária</label>
