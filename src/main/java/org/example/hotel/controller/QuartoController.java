@@ -76,7 +76,7 @@ public class QuartoController {
     // retorna lista de quartos livres e o seu respectivo número
     @GetMapping("/livres")
     public String diponiveis(Model model){
-        model.addAttribute("disponiveis", service.ListarLivres());
+        model.addAttribute("disponiveis", service.listarLivres());
         model.addAttribute("numeroDisponíveis", service.contarLivres());
         return "livres";
     }

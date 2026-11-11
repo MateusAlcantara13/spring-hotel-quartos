@@ -2,13 +2,13 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Qaurtos livre</title>
+    <title>Quartos livres</title>
 </head>
 <body>
 
 <h1>Quartos livres</h1>
 
-br*2
+
 
 <table border="1">
     <tr>
@@ -20,7 +20,7 @@ br*2
         <th>Valor da diária</th>
         <th>Detalhes</th>
     </tr>
-    <tr th:each="item : ${quartos}">
+    <tr th:each="item : ${disponiveis}">
         <td th:text="${item.id}"></td>
         <td th:text="${item.numero}"></td>
         <td th:text="${item.andar}"></td>
@@ -30,6 +30,8 @@ br*2
         <td><a th:href="@{/quartos/{id}(id=${item.id})}">Abrir</a></td>
     </tr>
 </table>
+<br>
+<h2>Total de quartos livres: <span th:text="${numeroDisponiveis}"></span></h2>
 <br>
 <a th:href="@{/quartos/novo}">Adicionar novo</a>
 <br>
